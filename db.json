@@ -18,17 +18,17 @@
     {
       "id": "4",
       "content": "Learn Next.js",
-      "important": true
+      "important": false
     },
     {
       "id": "5",
       "content": "Pick up phone from repair shop",
-      "important": false
+      "important": true
     },
     {
       "id": "60ab",
       "content": "a new note…asfasf",
-      "important": false
+      "important": true
     }
   ]
 }

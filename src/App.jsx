@@ -17,11 +17,18 @@ function App() {
     let note = notes.find((note) => note.id === noteId)
     let changedNote = { ...note, important: !note.important }
 
-    updateNote(noteId, changedNote).then((data) => {
-      setNotes((notes) =>
-        notes.map((note) => (note.id === noteId ? data : note)),
-      )
-    })
+    updateNote(noteId, changedNote)
+      .then((data) => {
+        setNotes((notes) =>
+          notes.map((note) => (note.id === noteId ? data : note)),
+        )
+      })
+      .catch(() => {
+        window.alert(
+          `the note "${note.content}" was already deleted from server`,
+        )
+        setNotes((notes) => notes.filter((note) => note.id !== noteId))
+      })
   }
 
   return (
