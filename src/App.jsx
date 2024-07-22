@@ -1,6 +1,10 @@
+import { useState } from 'react'
 import { Note } from './components/Note.jsx'
 
-function App({ notes }) {
+function App({ notes: initialNotes }) {
+  let [notes, setNotes] = useState(initialNotes)
+  let [newNote, setNewNote] = useState('a new note…')
+
   return (
     <>
       <h1>Notes</h1>
@@ -9,6 +13,32 @@ function App({ notes }) {
           <Note key={note.id} note={note} />
         ))}
       </ul>
+      <form
+        onSubmit={(event) => {
+          event.preventDefault()
+
+          let noteObject = {
+            content: newNote,
+            important: Math.random() < 0.5,
+            id: String(notes.length + 1),
+          }
+          setNotes((notes) => notes.concat(noteObject))
+
+          setNewNote('')
+        }}
+      >
+        <input
+          type="text"
+          name="content"
+          id="content"
+          required
+          value={newNote}
+          onChange={(event) => setNewNote(event.target.value)}
+          aria-label="New note"
+          placeholder="Add a note…"
+        />
+        <button type="submit">Save</button>
+      </form>
     </>
   )
 }
