@@ -37,9 +37,12 @@ function App() {
             important: Math.random() < 0.5,
             id: String(notes.length + 1),
           }
-          setNotes((notes) => notes.concat(noteObject))
-
-          setNewNote('')
+          axios
+            .post('http://localhost:3000/notes', noteObject)
+            .then(({ data }) => {
+              setNotes((notes) => notes.concat(data))
+              setNewNote('')
+            })
         }}
       >
         <input
