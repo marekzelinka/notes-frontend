@@ -15,6 +15,19 @@ function App() {
       .then((response) => setNotes(response.data))
   }, [])
 
+  let toggleImportance = (noteId) => {
+    let note = notes.find((note) => note.id === noteId)
+    let changedNote = { ...note, important: !note.important }
+
+    axios
+      .put(`http://localhost:3000/notes/${noteId}`, changedNote)
+      .then(({ data }) => {
+        setNotes((notes) =>
+          notes.map((note) => (note.id === noteId ? data : note)),
+        )
+      })
+  }
+
   return (
     <>
       <h1>Notes</h1>
@@ -25,7 +38,11 @@ function App() {
       </div>
       <ul>
         {notesToShow.map((note) => (
-          <Note key={note.id} note={note} />
+          <Note
+            key={note.id}
+            note={note}
+            onToggleImportance={() => toggleImportance(note.id)}
+          />
         ))}
       </ul>
       <form
