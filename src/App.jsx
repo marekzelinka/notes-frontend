@@ -4,12 +4,20 @@ import { Note } from './components/Note.jsx'
 function App({ notes: initialNotes }) {
   let [notes, setNotes] = useState(initialNotes)
   let [newNote, setNewNote] = useState('a new note…')
+  let [showAll, setShowAll] = useState(true)
+
+  let notesToShow = showAll ? notes : notes.filter((note) => note.important)
 
   return (
     <>
       <h1>Notes</h1>
+      <div>
+        <button type="button" onClick={() => setShowAll((showAll) => !showAll)}>
+          show {showAll ? 'important' : 'all'}
+        </button>
+      </div>
       <ul>
-        {notes.map((note) => (
+        {notesToShow.map((note) => (
           <Note key={note.id} note={note} />
         ))}
       </ul>
