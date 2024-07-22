@@ -1,6 +1,6 @@
-import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { Note } from './components/Note.jsx'
+import { createNote, getNotes, updateNote } from './services/note.js'
 
 function App() {
   let [notes, setNotes] = useState([])
@@ -10,22 +10,18 @@ function App() {
   let notesToShow = showAll ? notes : notes.filter((note) => note.important)
 
   useEffect(() => {
-    axios
-      .get('http://localhost:3000/notes')
-      .then((response) => setNotes(response.data))
+    getNotes().then(setNotes)
   }, [])
 
   let toggleImportance = (noteId) => {
     let note = notes.find((note) => note.id === noteId)
     let changedNote = { ...note, important: !note.important }
 
-    axios
-      .put(`http://localhost:3000/notes/${noteId}`, changedNote)
-      .then(({ data }) => {
-        setNotes((notes) =>
-          notes.map((note) => (note.id === noteId ? data : note)),
-        )
-      })
+    updateNote(noteId, changedNote).then((data) => {
+      setNotes((notes) =>
+        notes.map((note) => (note.id === noteId ? data : note)),
+      )
+    })
   }
 
   return (
@@ -52,14 +48,11 @@ function App() {
           let noteObject = {
             content: newNote,
             important: Math.random() < 0.5,
-            id: String(notes.length + 1),
           }
-          axios
-            .post('http://localhost:3000/notes', noteObject)
-            .then(({ data }) => {
-              setNotes((notes) => notes.concat(data))
-              setNewNote('')
-            })
+          createNote(noteObject).then((data) => {
+            setNotes((notes) => notes.concat(data))
+            setNewNote('')
+          })
         }}
       >
         <input
