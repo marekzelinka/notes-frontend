@@ -78,8 +78,26 @@ function App() {
         />
         <button type="submit">Save</button>
       </form>
+      <Footer />
     </>
   )
 }
 
 export default App
+
+function Footer() {
+  let style = {
+    color: 'green',
+    fontStyle: 'italic',
+    fontSize: 14,
+    marginTop: '24px',
+  }
+
+  return (
+    <footer style={style}>
+      <em>
+        Note app, Department of Computer Science, University of Helsinki 2025
+      </em>
+    </footer>
+  )
+}
