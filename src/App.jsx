@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Alert } from './components/Alert.jsx'
 import { Note } from './components/Note.jsx'
 import { createNote, getNotes, updateNote } from './services/note.js'
 
@@ -6,6 +7,7 @@ function App() {
   let [notes, setNotes] = useState([])
   let [newNote, setNewNote] = useState('a new note…')
   let [showAll, setShowAll] = useState(true)
+  let [errorMessage, setErrorMessage] = useState(null)
 
   let notesToShow = showAll ? notes : notes.filter((note) => note.important)
 
@@ -24,9 +26,10 @@ function App() {
         )
       })
       .catch(() => {
-        window.alert(
+        setErrorMessage(
           `the note "${note.content}" was already deleted from server`,
         )
+        window.setTimeout(() => setErrorMessage(null), 5000)
         setNotes((notes) => notes.filter((note) => note.id !== noteId))
       })
   }
@@ -34,6 +37,7 @@ function App() {
   return (
     <>
       <h1>Notes</h1>
+      <Alert message={errorMessage} />
       <div>
         <button type="button" onClick={() => setShowAll((showAll) => !showAll)}>
           show {showAll ? 'important' : 'all'}
