@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const BASE_URL = 'http://localhost:3000/notes'
+const BASE_URL = `${import.meta.env.VITE_API_URL}/api/notes`
 
 export function getNotes() {
   return axios.get(BASE_URL).then((response) => response.data)
