@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { Alert } from './components/Alert.jsx'
 import { Note } from './components/Note.jsx'
 import { login } from './services/login.js'
-import { createNote, getNotes, updateNote } from './services/note.js'
+import { createNote, getNotes, setToken, updateNote } from './services/note.js'
 
 function App() {
   const [errorMessage, setErrorMessage] = useState(null)
@@ -27,6 +27,7 @@ function App() {
     try {
       const user = await login({ username, password })
       setUser(user)
+      setToken(user.token)
       setUsername('')
       setPassword('')
     } catch {
