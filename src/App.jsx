@@ -3,12 +3,12 @@ import { Alert } from './components/Alert.jsx'
 import { LoginForm } from './components/LoginForm.jsx'
 import { Note } from './components/Note.jsx'
 import { NoteForm } from './components/NoteForm.jsx'
+import { Togglable } from './components/Togglable.jsx'
 import { login } from './services/login.js'
 import { createNote, getNotes, setToken, updateNote } from './services/note.js'
 
 function App() {
   const [user, setUser] = useState(null)
-  const [loginVisible, setLoginVisible] = useState(false)
 
   const [notes, setNotes] = useState([])
   const [showAll, setShowAll] = useState(true)
@@ -89,28 +89,14 @@ function App() {
               Logout
             </button>
           </div>
-          <NoteForm onSubmit={handleAddNote} />
+          <Togglable openButtonLabel="new note">
+            <NoteForm onSubmit={handleAddNote} />
+          </Togglable>
         </>
       ) : (
-        <>
-          <div style={{ display: loginVisible ? 'none' : undefined }}>
-            <button
-              type="button"
-              onClick={() => setLoginVisible((loginVisible) => !loginVisible)}
-            >
-              log in
-            </button>
-          </div>
-          <div style={{ display: loginVisible ? undefined : 'none' }}>
-            <LoginForm onSubmit={handleLogin} />
-            <button
-              type="button"
-              onClick={() => setLoginVisible((loginVisible) => !loginVisible)}
-            >
-              cancel
-            </button>
-          </div>
-        </>
+        <Togglable openButtonLabel="log in">
+          <LoginForm onSubmit={handleLogin} />
+        </Togglable>
       )}
       <div>
         <button type="button" onClick={() => setShowAll((showAll) => !showAll)}>
