@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types'
+
 export function LoginForm({ onSubmit }) {
   const handleSubmit = async (event) => {
     event.preventDefault()
@@ -27,4 +29,7 @@ export function LoginForm({ onSubmit }) {
       <button type="submit">login</button>
     </form>
   )
+}
+LoginForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
 }

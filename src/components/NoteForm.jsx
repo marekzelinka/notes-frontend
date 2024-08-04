@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types'
+
 export function NoteForm({ onSubmit }) {
   const handleSubmit = async (event) => {
     event.preventDefault()
@@ -26,4 +28,7 @@ export function NoteForm({ onSubmit }) {
       <button type="submit">Save</button>
     </form>
   )
+}
+NoteForm.propTypes = {
+  onSubmit: PropTypes.func.isRequired,
 }
