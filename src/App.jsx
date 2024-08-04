@@ -8,6 +8,7 @@ import { createNote, getNotes, setToken, updateNote } from './services/note.js'
 
 function App() {
   const [user, setUser] = useState(null)
+  const [loginVisible, setLoginVisible] = useState(false)
 
   const [notes, setNotes] = useState([])
   const [showAll, setShowAll] = useState(true)
@@ -91,7 +92,25 @@ function App() {
           <NoteForm onSubmit={handleAddNote} />
         </>
       ) : (
-        <LoginForm onSubmit={handleLogin} />
+        <>
+          <div style={{ display: loginVisible ? 'none' : undefined }}>
+            <button
+              type="button"
+              onClick={() => setLoginVisible((loginVisible) => !loginVisible)}
+            >
+              log in
+            </button>
+          </div>
+          <div style={{ display: loginVisible ? undefined : 'none' }}>
+            <LoginForm onSubmit={handleLogin} />
+            <button
+              type="button"
+              onClick={() => setLoginVisible((loginVisible) => !loginVisible)}
+            >
+              cancel
+            </button>
+          </div>
+        </>
       )}
       <div>
         <button type="button" onClick={() => setShowAll((showAll) => !showAll)}>
