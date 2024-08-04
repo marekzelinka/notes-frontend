@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Alert } from './components/Alert.jsx'
 import { LoginForm } from './components/LoginForm.jsx'
 import { Note } from './components/Note.jsx'
@@ -13,6 +13,8 @@ function App() {
   const [notes, setNotes] = useState([])
   const [showAll, setShowAll] = useState(true)
   const notesToShow = showAll ? notes : notes.filter((note) => note.important)
+
+  const togglableNoteFormRef = useRef()
 
   useEffect(() => {
     getNotes().then(setNotes)
@@ -74,6 +76,8 @@ function App() {
     const note = await createNote(noteObject)
     setNotes((notes) => notes.concat(note))
 
+    togglableNoteFormRef.current?.toggleVisiblity()
+
     return { success: true }
   }
 
@@ -89,7 +93,7 @@ function App() {
               Logout
             </button>
           </div>
-          <Togglable openButtonLabel="new note">
+          <Togglable ref={togglableNoteFormRef} openButtonLabel="new note">
             <NoteForm onSubmit={handleAddNote} />
           </Togglable>
         </>
