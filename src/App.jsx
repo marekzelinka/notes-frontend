@@ -21,12 +21,29 @@ function App() {
     getNotes().then(setNotes)
   }, [])
 
+  useEffect(() => {
+    const loggedUserJSON = localStorage.getItem('loggedNoteappUser')
+
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      setUser(user)
+      setToken(user.token)
+    }
+  }, [])
+
+  const handleLogout = () => {
+    setUser(null)
+    localStorage.removeItem('loggedNoteappUser')
+    setToken(null)
+  }
+
   const handleLogin = async (event) => {
     event.preventDefault()
 
     try {
       const user = await login({ username, password })
       setUser(user)
+      localStorage.setItem('loggedNoteappUser', JSON.stringify(user))
       setToken(user.token)
       setUsername('')
       setPassword('')
@@ -61,7 +78,12 @@ function App() {
       <Alert message={errorMessage} />
       {user ? (
         <>
-          <p>Signed in as {user.name}</p>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <p>Signed in as {user.name}</p>
+            <button type="button" onClick={handleLogout}>
+              Logout
+            </button>
+          </div>
           <form
             onSubmit={(event) => {
               event.preventDefault()
