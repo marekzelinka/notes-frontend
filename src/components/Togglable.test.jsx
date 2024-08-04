@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, test } from 'vitest'
-import { Togglable } from './Togglable'
+import { Togglable } from './Togglable.jsx'
 
 describe('<Togglable />', () => {
   beforeEach(() => {
