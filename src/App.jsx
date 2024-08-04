@@ -4,20 +4,20 @@ import { Note } from './components/Note.jsx'
 import { createNote, getNotes, updateNote } from './services/note.js'
 
 function App() {
-  let [notes, setNotes] = useState([])
-  let [newNote, setNewNote] = useState('a new note…')
-  let [showAll, setShowAll] = useState(true)
-  let [errorMessage, setErrorMessage] = useState(null)
+  const [notes, setNotes] = useState([])
+  const [newNote, setNewNote] = useState('a new note…')
+  const [showAll, setShowAll] = useState(true)
+  const [errorMessage, setErrorMessage] = useState(null)
 
-  let notesToShow = showAll ? notes : notes.filter((note) => note.important)
+  const notesToShow = showAll ? notes : notes.filter((note) => note.important)
 
   useEffect(() => {
     getNotes().then(setNotes)
   }, [])
 
-  let toggleImportance = (noteId) => {
-    let note = notes.find((note) => note.id === noteId)
-    let changedNote = { ...note, important: !note.important }
+  const toggleImportance = (noteId) => {
+    const note = notes.find((note) => note.id === noteId)
+    const changedNote = { ...note, important: !note.important }
 
     updateNote(noteId, changedNote)
       .then((data) => {
@@ -56,7 +56,7 @@ function App() {
         onSubmit={(event) => {
           event.preventDefault()
 
-          let noteObject = {
+          const noteObject = {
             content: newNote,
             important: Math.random() < 0.5,
           }
@@ -86,7 +86,7 @@ function App() {
 export default App
 
 function Footer() {
-  let style = {
+  const style = {
     color: 'green',
     fontStyle: 'italic',
     fontSize: 14,
