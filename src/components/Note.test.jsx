@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import { expect, test } from 'vitest'
+import { test } from 'vitest'
 import { Note } from './Note'
 
 test('renders content', () => {
@@ -9,5 +9,5 @@ test('renders content', () => {
   }
 
   render(<Note note={note} />)
-  expect(screen.getByText(note.content)).toBeDefined()
+  screen.getByText(note.content)
 })
