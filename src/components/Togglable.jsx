@@ -33,7 +33,7 @@ export const Togglable = forwardRef(
             {openButtonLabel}
           </button>
         </div>
-        <div style={showWhenVisible}>
+        <div style={showWhenVisible} data-testid="togglable-content">
           {children}
           <button type="button" onClick={toggleVisiblity}>
             {closeButtonLabel}
